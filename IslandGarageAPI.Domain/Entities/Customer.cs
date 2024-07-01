@@ -11,5 +11,6 @@
         public string Email { get; set; } = string.Empty;
         public required string Status { get; set; }
         public required DateTime DtAccess { get; set; }
+        public required DateTime CreatedAt { get; set; }
     }
 }
