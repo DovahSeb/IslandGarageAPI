@@ -1,6 +1,7 @@
 ﻿using IslandGarageAPI.Application.Interfaces;
 using IslandGarageAPI.Application.Services;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace IslandGarageAPI.Application.Extensions
 {
@@ -8,6 +9,8 @@ namespace IslandGarageAPI.Application.Extensions
     {
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
             services.AddScoped<ICustomerService, CustomerService>();
 
             return services;

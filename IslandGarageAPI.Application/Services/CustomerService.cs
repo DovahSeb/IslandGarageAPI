@@ -1,26 +1,34 @@
 ﻿using IslandGarageAPI.Domain.Entities;
 using IslandGarageAPI.Domain.Interfaces.Repositories;
 using IslandGarageAPI.Application.Interfaces;
+using IslandGarageAPI.Application.DTOs;
+using AutoMapper;
 
 namespace IslandGarageAPI.Application.Services
 {
     public class CustomerService : ICustomerService
     {
         private readonly ICustomerRepository _customerRepository;
+        private readonly IMapper _mapper;
 
-        public CustomerService(ICustomerRepository customerRepository)
+        public CustomerService(ICustomerRepository customerRepository, IMapper mapper)
         {
             _customerRepository = customerRepository;
+            _mapper = mapper;
         }
 
-        public async Task<IEnumerable<Customer>> GetAllCustomers()
+        public async Task<List<CustomerResponse>> GetAllCustomers()
         {
-            return await _customerRepository.GetAll();
+            var response = await _customerRepository.GetAll();
+            
+            return _mapper.Map<List<CustomerResponse>>(response);
         }
 
-        public async Task<Customer?> GetCustomerById(int id)
+        public async Task<CustomerResponse?> GetCustomerById(int id)
         {
-            return await _customerRepository.GetById(id);
+            var response = await _customerRepository.GetById(id);
+
+            return _mapper.Map<CustomerResponse>(response);
         }
 
         public void AddCustomer(Customer customer)

@@ -14,7 +14,7 @@ namespace IslandGarageAPI.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Customer>> GetAll()
+        public async Task<List<Customer>> GetAll()
         {
             var customers = await _context.Customers.ToListAsync();
 
