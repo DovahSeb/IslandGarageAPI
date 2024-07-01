@@ -1,5 +1,7 @@
 using IslandGarageAPI.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
+using IslandGarageAPI.Application.Extensions;
+using IslandGarageAPI.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,8 +14,12 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<DatabaseContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+        b => b.MigrationsAssembly("IslandGarageAPI.Infrastructure"));
 });
+
+builder.Services.AddInfrastructure();
+builder.Services.AddServices();
 
 var app = builder.Build();
 
