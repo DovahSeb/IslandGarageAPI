@@ -29,7 +29,7 @@ namespace IslandGarageAPI.Infrastructure.Repositories
             return customer;
         }
 
-        public async Task<Customer> AddCustomer(Customer customer)
+        public async Task<List<Customer>> AddCustomer(Customer customer)
         {
             customer.CustomerNumber = await GetNextCustomerNumber();
             customer.Status = "I";
@@ -39,12 +39,30 @@ namespace IslandGarageAPI.Infrastructure.Repositories
             _context.Customers.Add(customer);
             _context.SaveChanges();
 
-            return customer;
+            return await GetAll();
         }
 
-        public void Update(Customer customer)
+        public async Task<List<Customer>> UpdateCustomer(Customer customer)
         {
-            throw new NotImplementedException();
+            var existingCustomer = await _context.Customers.FindAsync(customer.Id);
+
+            if(existingCustomer is not null)
+            {
+                existingCustomer.FirstName = customer.FirstName;
+                existingCustomer.LastName = customer.LastName;
+                existingCustomer.Address = customer.Address;
+                existingCustomer.PhoneNumber = customer.PhoneNumber;
+                existingCustomer.Email = customer.Email;
+                existingCustomer.Status = "M";
+                existingCustomer.DtAccess = DateTime.Now;
+
+                _context.Customers.Update(existingCustomer);
+                _context.SaveChanges();
+
+                return await GetAll();
+            }
+
+            return null;
         }
 
         public void Delete(int id)

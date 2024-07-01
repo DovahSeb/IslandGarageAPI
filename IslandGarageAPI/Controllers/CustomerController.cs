@@ -1,6 +1,7 @@
 ﻿using IslandGarageAPI.Application.DTOs;
 using IslandGarageAPI.Application.Interfaces;
 using IslandGarageAPI.Domain.Entities;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IslandGarageAPI.Controllers
@@ -41,6 +42,20 @@ namespace IslandGarageAPI.Controllers
         {
             var newCustomer = await _customerService.AddCustomer(request);
             return Ok(newCustomer);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<List<CustomerResponse>>> UpdateCustomer(UpdateCustomerRequest request)
+        {
+            try
+            {
+                var existingCustomer = await _customerService.UpdateCustomer(request);
+                return Ok(existingCustomer);
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
         }
     }
 }

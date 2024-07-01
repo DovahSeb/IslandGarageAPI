@@ -9,6 +9,7 @@ namespace IslandGarageAPI.Application.Mapper
         public CustomerProfile()
         {
             CreateMap<CreateCustomerRequest, Customer>();
+            CreateMap<UpdateCustomerRequest, Customer>();
             CreateMap<Customer, CustomerResponse>();
         }
     }
