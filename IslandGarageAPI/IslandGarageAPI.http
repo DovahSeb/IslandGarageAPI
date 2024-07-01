@@ -1,0 +1,6 @@
+@IslandGarageAPI_HostAddress = http://localhost:5277
+
+GET {{IslandGarageAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
