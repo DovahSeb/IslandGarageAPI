@@ -31,9 +31,12 @@ namespace IslandGarageAPI.Application.Services
             return _mapper.Map<CustomerResponse>(response);
         }
 
-        public void AddCustomer(Customer customer)
+        public async Task<CustomerResponse> AddCustomer(CreateCustomerRequest request)
         {
-            throw new NotImplementedException();
+            var customer = _mapper.Map<Customer>(request);
+            var response = await _customerRepository.AddCustomer(customer);
+
+            return _mapper.Map<CustomerResponse>(response);
         }
 
         public void UpdateCustomer(Customer customer)

@@ -2,6 +2,7 @@
 using IslandGarageAPI.Domain.Interfaces.Repositories;
 using IslandGarageAPI.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
+using System.Text.RegularExpressions;
 
 namespace IslandGarageAPI.Infrastructure.Repositories
 {
@@ -28,9 +29,17 @@ namespace IslandGarageAPI.Infrastructure.Repositories
             return customer;
         }
 
-        public void Add(Customer customer)
+        public async Task<Customer> AddCustomer(Customer customer)
         {
-            throw new NotImplementedException();
+            customer.CustomerNumber = await GetNextCustomerNumber();
+            customer.Status = "I";
+            customer.DtAccess = DateTime.Now;
+            customer.CreatedAt = DateTime.Now;
+
+            _context.Customers.Add(customer);
+            _context.SaveChanges();
+
+            return customer;
         }
 
         public void Update(Customer customer)
@@ -41,6 +50,40 @@ namespace IslandGarageAPI.Infrastructure.Repositories
         public void Delete(int id)
         {
             throw new NotImplementedException();
+        }
+
+        private async Task<string> GetNextCustomerNumber()
+        {
+            var lastCustomer = await _context.Customers.OrderByDescending(c => c.CustomerNumber).FirstOrDefaultAsync();
+            string lastCustomerNumber = lastCustomer?.CustomerNumber;
+
+            if (string.IsNullOrEmpty(lastCustomerNumber))
+            {
+                // Return the default customer number if there's no last customer number
+                return "IG-000001";
+            }
+
+            // Define the regex pattern to match the customer number format
+            string pattern = @"IG-(\d{6})";
+            var match = Regex.Match(lastCustomerNumber, pattern);
+
+            if (match.Success)
+            {
+                // Extract the numeric part of the customer number
+                string numberPart = match.Groups[1].Value;
+                // Parse it to an integer
+                int numericValue = int.Parse(numberPart);
+                // Increment the numeric value
+                numericValue++;
+                // Format the new customer number with leading zeros
+                string newNumberPart = numericValue.ToString("D6");
+                // Return the new customer number
+                return $"IG-{newNumberPart}";
+            }
+            else
+            {
+                throw new ArgumentException("Invalid customer number format.");
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using IslandGarageAPI.Application.Interfaces;
+﻿using IslandGarageAPI.Application.DTOs;
+using IslandGarageAPI.Application.Interfaces;
 using IslandGarageAPI.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,6 +34,13 @@ namespace IslandGarageAPI.Controllers
             }
 
             return Ok(customer);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<CustomerResponse>> AddCustomer(CreateCustomerRequest request)
+        {
+            var newCustomer = await _customerService.AddCustomer(request);
+            return Ok(newCustomer);
         }
     }
 }
