@@ -47,9 +47,11 @@ namespace IslandGarageAPI.Application.Services
             return _mapper.Map<List<CustomerResponse>>(response);
         }
 
-        public void DeleteCustomer(int id)
+        public async Task<List<CustomerResponse>> DeleteCustomer(int id)
         {
-            throw new NotImplementedException();
+            var response = await _customerRepository.DeleteCustomer(id);
+
+            return _mapper.Map<List<CustomerResponse>>(response);
         }
     }
 }

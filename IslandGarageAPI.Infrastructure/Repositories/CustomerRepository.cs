@@ -17,14 +17,16 @@ namespace IslandGarageAPI.Infrastructure.Repositories
 
         public async Task<List<Customer>> GetAll()
         {
-            var customers = await _context.Customers.ToListAsync();
+            var customers = await _context.Customers.Where(x => x.Status != "D").ToListAsync();
 
             return customers;
         }
 
         public async Task<Customer?> GetById(int id)
         {
-            var customer = await _context.Customers.FindAsync(id);
+            var customer = await _context.Customers
+                                            .Where(x => x.Id.Equals(id) && x.Status != "D")
+                                            .FirstOrDefaultAsync();
 
             return customer;
         }
@@ -65,9 +67,22 @@ namespace IslandGarageAPI.Infrastructure.Repositories
             return null;
         }
 
-        public void Delete(int id)
+        public async Task<List<Customer>> DeleteCustomer(int id)
         {
-            throw new NotImplementedException();
+            var customer = await _context.Customers.FindAsync(id);
+
+            if(customer is not null)
+            {
+                customer.Status = "D";
+                customer.DtAccess = DateTime.Now;
+
+                _context.Customers.Update(customer);
+                _context.SaveChanges();
+
+                return await GetAll();
+            }
+
+            return null;
         }
 
         private async Task<string> GetNextCustomerNumber()

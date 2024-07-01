@@ -1,7 +1,6 @@
 ﻿using IslandGarageAPI.Application.DTOs;
 using IslandGarageAPI.Application.Interfaces;
 using IslandGarageAPI.Domain.Entities;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IslandGarageAPI.Controllers
@@ -54,7 +53,21 @@ namespace IslandGarageAPI.Controllers
             }
             catch (Exception)
             {
-                return NotFound();
+                return NotFound("Customer not found");
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<List<CustomerResponse>>> DeleteCustomer(int id)
+        {
+            try
+            {
+                var response = await _customerService.DeleteCustomer(id);
+                return Ok(response);
+            }
+            catch (Exception)
+            {
+                return NotFound("Customer not found");
             }
         }
     }
