@@ -17,6 +17,7 @@ namespace IslandGarageAPI.Controllers
         }
 
         [HttpGet]
+        [Route("GetAllCustomers")]
         public async Task<ActionResult<List<Customer>>> GetAllCustomers()
         {
             var customers = await _customerService.GetAllCustomers();

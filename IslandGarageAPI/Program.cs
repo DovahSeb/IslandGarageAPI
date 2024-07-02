@@ -18,6 +18,17 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
         b => b.MigrationsAssembly("IslandGarageAPI.Infrastructure"));
 });
 
+builder.Services.AddCors(options =>
+{
+    var allowedOrigin = builder.Configuration.GetValue<string>("CORSPolicy:AllowedOrigin");
+
+    options.AddDefaultPolicy(x => {
+        x.WithOrigins(allowedOrigin);
+        x.AllowAnyMethod();
+        x.AllowAnyHeader();
+    });
+});
+
 builder.Services.AddInfrastructure();
 builder.Services.AddServices();
 
@@ -31,6 +42,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors();
 
 app.UseAuthorization();
 
