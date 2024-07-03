@@ -25,7 +25,8 @@ namespace IslandGarageAPI.Controllers
             return Ok(customers);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet]
+        [Route("GetCustomerById/{id}")]
         public async Task<ActionResult<List<Customer>>> GetCustomer(int id)
         {
             var customer = await _customerService.GetCustomerById(id);
@@ -38,6 +39,7 @@ namespace IslandGarageAPI.Controllers
         }
 
         [HttpPost]
+        [Route("AddCustomer")]
         public async Task<ActionResult<CustomerResponse>> AddCustomer(CreateCustomerRequest request)
         {
             var newCustomer = await _customerService.AddCustomer(request);
