@@ -9,6 +9,7 @@ namespace IslandGarageAPI.Infrastructure.Extensions
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
             services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<IVehicleRepository, VehicleRepository>();
 
             return services;
         }

@@ -18,7 +18,7 @@ namespace IslandGarageAPI.Controllers
 
         [HttpGet]
         [Route("GetAllCustomers")]
-        public async Task<ActionResult<List<Customer>>> GetAllCustomers()
+        public async Task<ActionResult<List<CustomerResponse>>> GetAllCustomers()
         {
             var customers = await _customerService.GetAllCustomers();
 
@@ -27,7 +27,7 @@ namespace IslandGarageAPI.Controllers
 
         [HttpGet]
         [Route("GetCustomerById/{id}")]
-        public async Task<ActionResult<List<Customer>>> GetCustomer(int id)
+        public async Task<ActionResult<List<CustomerResponse>>> GetCustomer(int id)
         {
             var customer = await _customerService.GetCustomerById(id);
             if (customer is null)

@@ -29,5 +29,5 @@ namespace IslandGarageAPI.Application.DTOs
         public int Id { get; set; }
     }
 
-    public record CustomerResponse(int id, string CustomerNumber, string FirstName, string LastName, string Address, string PhoneNumber, string Email);
+    public record CustomerResponse(int Id, string CustomerNumber, string FirstName, string LastName, string Address, string PhoneNumber, string Email);
 }

@@ -12,6 +12,7 @@ namespace IslandGarageAPI.Application.Extensions
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<IVehicleService, VehicleService>();
 
             return services;
         }

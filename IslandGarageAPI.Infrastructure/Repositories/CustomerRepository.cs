@@ -17,7 +17,10 @@ namespace IslandGarageAPI.Infrastructure.Repositories
 
         public async Task<List<Customer>> GetAll()
         {
-            var customers = await _context.Customers.Where(x => x.Status != "D").ToListAsync();
+            var customers = await _context.Customers
+                .Where(x => x.Status != "D")
+                .OrderByDescending(x => x.Id)
+                .ToListAsync();
 
             return customers;
         }
@@ -25,8 +28,8 @@ namespace IslandGarageAPI.Infrastructure.Repositories
         public async Task<Customer?> GetById(int id)
         {
             var customer = await _context.Customers
-                                            .Where(x => x.Id.Equals(id) && x.Status != "D")
-                                            .FirstOrDefaultAsync();
+                .Where(x => x.Id.Equals(id) && x.Status != "D")
+                .FirstOrDefaultAsync();
 
             return customer;
         }
