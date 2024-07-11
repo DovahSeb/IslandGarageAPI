@@ -8,6 +8,7 @@
         public required string Year { get; set; }
         public required string ChassisNo { get; set; }
         public required int CustomerId { get; set; }
+        public int VehicleImageId { get; set; }
         public required string Status { get; set; }
         public required DateTime DtAccess { get; set; }
         public required DateTime CreatedAt { get; set; }
