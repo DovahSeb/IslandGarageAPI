@@ -42,12 +42,12 @@ namespace IslandGarageAPI.Infrastructure.Repositories
             customer.CreatedAt = DateTime.Now;
 
             _context.Customers.Add(customer);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return await GetAll();
         }
 
-        public async Task<List<Customer>> UpdateCustomer(Customer customer)
+        public async Task<Customer> UpdateCustomer(Customer customer)
         {
             var existingCustomer = await _context.Customers.FindAsync(customer.Id);
 
@@ -62,9 +62,9 @@ namespace IslandGarageAPI.Infrastructure.Repositories
                 existingCustomer.DtAccess = DateTime.Now;
 
                 _context.Customers.Update(existingCustomer);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
 
-                return await GetAll();
+                return await GetById(existingCustomer.Id);
             }
 
             return null;

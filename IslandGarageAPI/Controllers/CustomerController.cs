@@ -40,14 +40,15 @@ namespace IslandGarageAPI.Controllers
 
         [HttpPost]
         [Route("AddCustomer")]
-        public async Task<ActionResult<CustomerResponse>> AddCustomer(CreateCustomerRequest request)
+        public async Task<ActionResult<List<CustomerResponse>>> AddCustomer(CreateCustomerRequest request)
         {
             var newCustomer = await _customerService.AddCustomer(request);
             return Ok(newCustomer);
         }
 
         [HttpPut]
-        public async Task<ActionResult<List<CustomerResponse>>> UpdateCustomer(UpdateCustomerRequest request)
+        [Route("UpdateCustomer")]
+        public async Task<ActionResult<CustomerResponse>> UpdateCustomer(UpdateCustomerRequest request)
         {
             try
             {

@@ -39,12 +39,12 @@ namespace IslandGarageAPI.Application.Services
             return _mapper.Map<List<CustomerResponse>>(response);
         }
 
-        public async Task<List<CustomerResponse>> UpdateCustomer(UpdateCustomerRequest request)
+        public async Task<CustomerResponse> UpdateCustomer(UpdateCustomerRequest request)
         {
             var customer = _mapper.Map<Customer>(request);
             var response = await _customerRepository.UpdateCustomer(customer);
 
-            return _mapper.Map<List<CustomerResponse>>(response);
+            return _mapper.Map<CustomerResponse>(response);
         }
 
         public async Task<List<CustomerResponse>> DeleteCustomer(int id)
