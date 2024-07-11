@@ -61,8 +61,9 @@ namespace IslandGarageAPI.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<List<CustomerResponse>>> DeleteCustomer(int id)
+        [HttpDelete]
+        [Route("DeleteCustomer/{id}")]
+        public async Task<ActionResult<CustomerResponse>> DeleteCustomer(int id)
         {
             try
             {

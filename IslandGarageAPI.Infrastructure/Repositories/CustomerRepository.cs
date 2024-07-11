@@ -28,7 +28,7 @@ namespace IslandGarageAPI.Infrastructure.Repositories
         public async Task<Customer?> GetById(int id)
         {
             var customer = await _context.Customers
-                .Where(x => x.Id.Equals(id) && x.Status != "D")
+                .Where(x => x.Id.Equals(id))
                 .FirstOrDefaultAsync();
 
             return customer;
@@ -70,7 +70,7 @@ namespace IslandGarageAPI.Infrastructure.Repositories
             return null;
         }
 
-        public async Task<List<Customer>> DeleteCustomer(int id)
+        public async Task<Customer> DeleteCustomer(int id)
         {
             var customer = await _context.Customers.FindAsync(id);
 
@@ -82,7 +82,7 @@ namespace IslandGarageAPI.Infrastructure.Repositories
                 _context.Customers.Update(customer);
                 _context.SaveChanges();
 
-                return await GetAll();
+                return await GetById(customer.Id);
             }
 
             return null;

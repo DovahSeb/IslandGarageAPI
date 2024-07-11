@@ -8,6 +8,6 @@ namespace IslandGarageAPI.Domain.Interfaces.Repositories
         Task<Customer?> GetById(int id);
         Task<List<Customer>> AddCustomer(Customer customer);
         Task<Customer> UpdateCustomer(Customer customer);
-        Task<List<Customer>> DeleteCustomer(int id);
+        Task<Customer> DeleteCustomer(int id);
     }
 }
