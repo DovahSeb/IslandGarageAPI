@@ -13,6 +13,7 @@ namespace IslandGarageAPI.Application.Extensions
 
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IVehicleService, VehicleService>();
+            services.AddScoped<IVehicleImageService, VehicleImageService>();
 
             return services;
         }

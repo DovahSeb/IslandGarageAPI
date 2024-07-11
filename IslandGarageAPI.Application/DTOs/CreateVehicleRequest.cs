@@ -27,6 +27,6 @@ namespace IslandGarageAPI.Application.DTOs
         public int Id { get; set; }
     }
 
-    public record VehicleResponse(int Id, string Make, string Model, string Year, string ChassisNo, int CustomerId);
+    public record VehicleResponse(int Id, string Make, string Model, string Year, string ChassisNo, int CustomerId, byte[] VehicleImage);
 
 }
