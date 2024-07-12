@@ -20,7 +20,7 @@ namespace IslandGarageAPI.Application.Services
         public async Task<List<VehicleResponse>> GetVehicleByCustomerId(int customerId)
         {
             var response = await _vehicleRepository.GetByCustomerId(customerId);
-
+            
             return _mapper.Map<List<VehicleResponse>>(response);
         }
 

@@ -15,9 +15,10 @@ namespace IslandGarageAPI.Infrastructure.Repositories
         }
 
         public async Task<List<Vehicle>> GetByCustomerId(int customerId)
-        {
+         {
             var customerVehicles = await _context.Vehicles
                 .Where(x => x.CustomerId == customerId && x.Status != "D")
+                .Include(x => x.VehicleImage)
                 .ToListAsync();
 
             return customerVehicles;

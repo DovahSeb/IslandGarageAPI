@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IslandGarageAPI.Application.DTOs
 {
@@ -27,6 +26,27 @@ namespace IslandGarageAPI.Application.DTOs
         public int Id { get; set; }
     }
 
-    public record VehicleResponse(int Id, string Make, string Model, string Year, string ChassisNo, int CustomerId, byte[] VehicleImage);
+    public class VehicleResponse
+    {
+        [Required]
+        public int Id { get; set; }
+
+        [Required]
+        public string Make { get; set; } = string.Empty;
+
+        [Required]
+        public string Model { get; set; } = string.Empty;
+
+        [Required]
+        public string Year { get; set; } = string.Empty;
+
+        [Required]
+        public string ChassisNo { get; set;} = string.Empty;
+
+        [Required]
+        public int CustomerId { get; set; }
+
+        public string? VehicleImage { get; set; }
+    }
 
 }
