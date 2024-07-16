@@ -11,7 +11,7 @@ namespace IslandGarageAPI.Application.Mapper
             CreateMap<CreateVehicleRequest, Vehicle>();
             CreateMap<UpdateVehicleRequest, Vehicle>();
             CreateMap<Vehicle, VehicleResponse>()
-                .ForMember(dest => dest.VehicleImage, opt => opt.MapFrom(src => src.VehicleImage != null ? Convert.ToBase64String(src.VehicleImage.ImageByte) : null));
+                .ForCtorParam(nameof(VehicleResponse.VehicleImage), opt => opt.MapFrom(src => src.VehicleImage != null ? Convert.ToBase64String(src.VehicleImage.ImageByte) : null));
         }
     }
 }
