@@ -19,6 +19,7 @@ namespace IslandGarageAPI.Infrastructure.Repositories
             var customerVehicles = await _context.Vehicles
                 .Where(x => x.CustomerId == customerId && x.Status != "D")
                 .Include(x => x.VehicleImage)
+                .OrderByDescending(x => x.Id)
                 .ToListAsync();
 
             return customerVehicles;
