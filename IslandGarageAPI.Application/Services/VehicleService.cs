@@ -17,6 +17,13 @@ namespace IslandGarageAPI.Application.Services
             _mapper = mapper;
         }
 
+        public async Task<VehicleResponse> GetById(int id)
+        {
+            var response = await _vehicleRepository.GetById(id);
+
+            return _mapper.Map<VehicleResponse>(response);
+        }
+
         public async Task<List<VehicleResponse>> GetVehicleByCustomerId(int customerId)
         {
             var response = await _vehicleRepository.GetByCustomerId(customerId);
@@ -32,14 +39,12 @@ namespace IslandGarageAPI.Application.Services
             return _mapper.Map<List<VehicleResponse>>(response);
         }
 
-        public Task<VehicleResponse> GetById(int id)
+        public async Task<VehicleResponse> UpdateVehicle(UpdateVehicleRequest request)
         {
-            throw new NotImplementedException();
-        }
+            var vehicle = _mapper .Map<Vehicle>(request);
+            var response = await _vehicleRepository.UpdateVehicle(vehicle);
 
-        public Task<VehicleResponse> UpdateVehicle(UpdateVehicleRequest request)
-        {
-            throw new NotImplementedException();
+            return _mapper.Map<VehicleResponse>(response);
         }
 
         public Task<VehicleResponse> DeleteVehicle(int id)

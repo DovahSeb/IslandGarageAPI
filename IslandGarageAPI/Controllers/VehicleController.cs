@@ -15,18 +15,30 @@ namespace IslandGarageAPI.Controllers
             _vehicleService = vehicleService;
         }
 
-
         [HttpGet]
-        [Route("GetVehicleByCustomerId/{customerId}")]
-        public async Task<ActionResult<List<VehicleResponse>>> GetVehicleByCustomerId(int customerId)
+        [Route("GetVehicleById/{id}")]
+        public async Task<ActionResult<VehicleImageResponse>> GetVehicleById(int id)
         {
-            var vehicle = await _vehicleService.GetVehicleByCustomerId(customerId);
-            if (vehicle is null)
+            var vehicle = await _vehicleService.GetById(id);
+            if(vehicle is null)
             {
                 return NotFound("Vehicle not found");
             }
 
             return Ok(vehicle);
+        }
+
+        [HttpGet]
+        [Route("GetVehicleByCustomerId/{customerId}")]
+        public async Task<ActionResult<List<VehicleResponse>>> GetVehicleByCustomerId(int customerId)
+        {
+            var vehicles = await _vehicleService.GetVehicleByCustomerId(customerId);
+            if (vehicles is null)
+            {
+                return NotFound("Vehicles not found");
+            }
+
+            return Ok(vehicles);
         }
 
         [HttpPost]
@@ -35,6 +47,21 @@ namespace IslandGarageAPI.Controllers
         {
             var newVehicle = await _vehicleService.AddVehicle(request);
             return Ok(newVehicle);
+        }
+
+        [HttpPut]
+        [Route("UpdateVehicle")]
+        public async Task<ActionResult<VehicleResponse>> UpdateVehicle (UpdateVehicleRequest request)
+        {
+            try
+            {
+                var existingVehicle = await _vehicleService.UpdateVehicle(request);
+                return Ok(existingVehicle);
+            }
+            catch (Exception)
+            {
+                return NotFound("Customer not found");
+            }
         }
     }
 }
