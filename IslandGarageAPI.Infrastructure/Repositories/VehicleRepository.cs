@@ -70,9 +70,22 @@ namespace IslandGarageAPI.Infrastructure.Repositories
             return null;
         }
 
-        public Task<Vehicle> DeleteVehicle(int id)
+        public async Task<Vehicle> DeleteVehicle(int id)
         {
-            throw new NotImplementedException();
+            var vehicle = await _context.Vehicles.FindAsync(id);
+
+            if (vehicle is not null)
+            {
+                vehicle.Status = "D";
+                vehicle.DtAccess = DateTime.Now;
+
+                _context.Vehicles.Update(vehicle);
+                await _context.SaveChangesAsync();
+
+                return await GetById(vehicle.Id);
+            }
+
+            return null;
         }
     }
 }

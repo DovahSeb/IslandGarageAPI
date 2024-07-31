@@ -60,7 +60,22 @@ namespace IslandGarageAPI.Controllers
             }
             catch (Exception)
             {
-                return NotFound("Customer not found");
+                return NotFound("Vehicle not found");
+            }
+        }
+
+        [HttpDelete]
+        [Route("DeleteVehicle/{id}")]
+        public async Task<ActionResult<CustomerResponse>> DeleteVehicle(int id)
+        {
+            try
+            {
+                var response = await _vehicleService.DeleteVehicle(id);
+                return Ok(response);
+            }
+            catch (Exception)
+            {
+                return NotFound("Vehicle not found");
             }
         }
     }

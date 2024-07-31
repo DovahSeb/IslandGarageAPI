@@ -80,7 +80,7 @@ namespace IslandGarageAPI.Infrastructure.Repositories
                 customer.DtAccess = DateTime.Now;
 
                 _context.Customers.Update(customer);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
 
                 return await GetById(customer.Id);
             }

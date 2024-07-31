@@ -47,9 +47,11 @@ namespace IslandGarageAPI.Application.Services
             return _mapper.Map<VehicleResponse>(response);
         }
 
-        public Task<VehicleResponse> DeleteVehicle(int id)
+        public async Task<VehicleResponse> DeleteVehicle(int id)
         {
-            throw new NotImplementedException();
+            var response = await _vehicleRepository.DeleteVehicle(id);
+
+            return _mapper .Map<VehicleResponse>(response);
         }
     }
 }
